@@ -7,9 +7,9 @@
     "url": "git+https://github.com/huushuur/wetube-reloaded.git"
   },
   "scripts": {
-    "dev": "nodemon --exec babel-node index.js"
+    "dev": "nodemon --exec babel-node src/server.js"
   },
-  "author": "",
+  "author": "huushuur",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/huushuur/wetube-reloaded/issues"
