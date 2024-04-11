@@ -6,10 +6,10 @@ const app = express();
 
 // 特定のルートへのHTTP GETリクエストに対する設定
 app.get("/", (req, res) => {
-  return res.send("I still love you");
+  return res.send("<h1>I still love you.</h1>");
 });
 app.get("/login", (req, res) => {
-  return res.send("Login here.");
+  return res.send({ messeage: "Login here." });
 });
 
 const handleListening = () =>
