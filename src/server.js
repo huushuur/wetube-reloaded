@@ -4,13 +4,22 @@ const PORT = 4000;
 
 const app = express();
 
-// 特定のルートへのHTTP GETリクエストに対する設定
-app.get("/", (req, res) => {
-  return res.send("<h1>I still love you.</h1>");
-});
-app.get("/login", (req, res) => {
+const logger = (req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+};
+
+const handleHome = (req, res) => {
+  return res.send("I love middlewares");
+};
+
+app.get("/", logger, handleHome);
+
+const handleLogin = (req, res) => {
   return res.send({ messeage: "Login here." });
-});
+};
+
+app.get("/login", handleLogin);
 
 const handleListening = () =>
   console.log(`Server listening on port http://localhost:${PORT} 🚀`);
