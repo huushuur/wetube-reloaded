@@ -27,11 +27,6 @@ app.use((req, res, next) => {
   });
 });
 
-app.get("/add-one", (req, res, next) => {
-  req.session.cloth += 1;
-  return res.send(`${req.session.id}\n${req.session.cloth}`);
-});
-
 app.use("/", rootRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
