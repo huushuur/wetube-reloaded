@@ -1,4 +1,4 @@
-extends base
+extends ../base
 
 block content
     h4 Update video
@@ -7,4 +7,3 @@ block content
         input(placeholder="Description", name="description", required, type="text", minlength=20, value=video.description)
         input(placeholder="Hashtags, seperated by comma.", name="hashtags", required, type="text", value=video.hashtags.join())
         input(value="Save",type="submit")
-    
