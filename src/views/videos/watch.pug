@@ -1,6 +1,7 @@
 extends ../base
 
-block content 
+block content
+    video(src="/" + video.fileUrl, width="300", height="300", controls)
     div
         p=video.description
         small=video.createdAt
