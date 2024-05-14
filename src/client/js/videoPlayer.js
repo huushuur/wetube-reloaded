@@ -43,6 +43,23 @@ const handleVolumeChange = (event) => {
   video.volume = value;
 };
 
+const formatTime = (seconds) => {
+  const time = new Date(seconds * 1000)
+    .toISOString()
+    .substring(11, 19)
+    .replace(/:/g, "");
+  const timeStr = Number(time).toString().padStart(3, "0");
+
+  const hour = timeStr.slice(-6, -4) + ":";
+  const min = timeStr.slice(-4, -2) + ":";
+  const sec = timeStr.slice(-2);
+
+  if (seconds >= 3600) {
+    return hour + min + sec;
+  }
+  return min + sec;
+};
+
 const handleChangeVolumeRange = (event) => {
   const {
     target: { value },
@@ -53,10 +70,10 @@ const handleChangeVolumeRange = (event) => {
 };
 
 const handleLoadedMetaData = () => {
-  totalTime.innerText = Math.floor(video.duration);
+  totalTime.innerText = formatTime(Math.floor(video.duration));
 };
 const handleTimeUpdate = () => {
-  currentTime.innerText = Math.floor(video.currentTime);
+  currentTime.innerText = formatTime(Math.floor(video.currentTime));
 };
 
 playBtn.addEventListener("click", handlePlayClick);
