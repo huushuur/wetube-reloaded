@@ -4,6 +4,7 @@ const muteBtn = document.getElementById("mute");
 const volumeRange = document.getElementById("volume");
 const currentTime = document.getElementById("currentTime");
 const totalTime = document.getElementById("totalTime");
+const timeline = document.getElementById("timeline");
 
 let volumeValue = 0.5;
 video.volume = volumeValue;
@@ -71,9 +72,33 @@ const handleChangeVolumeRange = (event) => {
 
 const handleLoadedMetaData = () => {
   totalTime.innerText = formatTime(Math.floor(video.duration));
+  timeline.max = Math.floor(video.duration);
 };
 const handleTimeUpdate = () => {
   currentTime.innerText = formatTime(Math.floor(video.currentTime));
+  timeline.value = Math.floor(video.currentTime);
+};
+
+let videoPlayStatus = false;
+let setVideoPlayStatus = false;
+
+const handleTimelineChange = (event) => {
+  const {
+    target: { value },
+  } = event;
+  // setVideoPlayStatusについて、inputイベント実行直後trueになり、changeイベントが発生するまでは値が変わらないため、その間はif文も実行されない。
+  // changeイベントが行われる度にif文のvideoPlayStatusの更新が行われる。
+  if (!setVideoPlayStatus) {
+    videoPlayStatus = video.paused ? false : true;
+    setVideoPlayStatus = true;
+  }
+  video.pause();
+  video.currentTime = value;
+};
+
+const handleTimeLineSet = () => {
+  videoPlayStatus ? video.play() : video.pause();
+  setVideoPlayStatus = false;
 };
 
 playBtn.addEventListener("click", handlePlayClick);
@@ -82,3 +107,5 @@ volumeRange.addEventListener("input", handleVolumeChange);
 volumeRange.addEventListener("change", handleChangeVolumeRange);
 video.addEventListener("loadedmetadata", handleLoadedMetaData);
 video.addEventListener("timeupdate", handleTimeUpdate);
+timeline.addEventListener("input", handleTimelineChange);
+timeline.addEventListener("change", handleTimeLineSet);
