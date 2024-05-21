@@ -12,6 +12,7 @@ const handleDownload = () => {
   document.body.appendChild(a);
   a.click();
 
+  // 카메라 끄기
   const tracks = stream.getTracks();
   tracks.forEach((track) => {
     track.stop();
