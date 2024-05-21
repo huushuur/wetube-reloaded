@@ -48,6 +48,14 @@ const handleDownload = async () => {
   document.body.appendChild(thumbA);
   thumbA.click();
 
+  await ffmpeg.deleteFile("recording.webm");
+  await ffmpeg.deleteFile("output.mp4");
+  await ffmpeg.deleteFile("thumbnail.jpg");
+
+  URL.revokeObjectURL(mp4Url);
+  URL.revokeObjectURL(thumbUrl);
+  URL.revokeObjectURL(videoFile);
+
   // 카메라 끄기
   const tracks = stream.getTracks();
   tracks.forEach((track) => {
