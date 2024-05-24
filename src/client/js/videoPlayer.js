@@ -150,13 +150,21 @@ const changeVideoTime = (seconds) => {
 };
 
 const handleKeydown = (event) => {
-  if (event.code === "Space") {
-    handlePlayClick();
-    event.preventDefault();
-  } else if (event.code === "ArrowRight") {
-    changeVideoTime(5);
-  } else if (event.code === "ArrowLeft") {
-    changeVideoTime(-5);
+  const activeElement = document.activeElement;
+  const isFormField =
+    activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA";
+
+  if (!isFormField) {
+    if (event.code === "Space") {
+      handlePlayClick();
+      event.preventDefault();
+    } else if (event.key === "f" || event.key === "F") {
+      handleFullScreen();
+    } else if (event.code === "ArrowRight") {
+      changeVideoTime(5);
+    } else if (event.code === "ArrowLeft") {
+      changeVideoTime(-5);
+    }
   }
 };
 
