@@ -97,7 +97,7 @@ const handleTimelineChange = (event) => {
     target: { value },
   } = event;
   // setVideoPlayStatusについて、inputイベント実行直後trueになり、changeイベントが発生するまでは値が変わらないため、その間はif文も実行されない。
-  // changeイベントが行われる度にif文のvideoPlayStatusの更新が行われる。
+  // changeイベントが行われる度にif文のvideoPlayStatusの更新が行われる。if文の目的は「ユーザーがタイムラインを操作している間に動画の再生状態を一度だけ記録するため」
   if (!setVideoPlayStatus) {
     videoPlayStatus = video.paused ? false : true;
     setVideoPlayStatus = true;

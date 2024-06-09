@@ -167,5 +167,5 @@ export const createComment = async (req, res) => {
   }
   foundUser.comments.push(comment._id);
   foundUser.save();
-  return res.sendStatus(201);
+  return res.status(201).json({ newCommentId: comment._id });
 };
