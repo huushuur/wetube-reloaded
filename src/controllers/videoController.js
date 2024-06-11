@@ -177,8 +177,6 @@ export const deleteComment = async (req, res) => {
     },
     params: { commentId },
   } = req;
-  console.log(userId);
-  console.log(commentId);
 
   const comment = await Comment.findById({ commentId })
     .populate("owner")
@@ -187,14 +185,13 @@ export const deleteComment = async (req, res) => {
   if (!comment) {
     return res.sendStatus(404);
   }
-  console.log(comment);
 
   if (String(comment.owner) === String(userId)) {
     comment.comments.filter(
       (filterId) => String(filterId) !== String(commentId)
     );
 
-    await comment.deleteOne({ id });
+    await Comment.findByIdAndDelete({ id });
   } else {
     return res.sendStatus(404);
   }
