@@ -175,10 +175,10 @@ export const deleteComment = async (req, res) => {
     session: {
       user: { _id: userId },
     },
-    params: { commentId },
+    params: { id: commentId },
   } = req;
 
-  const comment = await Comment.findById({ commentId })
+  const comment = await Comment.findById(commentId)
     .populate("owner")
     .populate("video");
 
@@ -186,12 +186,15 @@ export const deleteComment = async (req, res) => {
     return res.sendStatus(404);
   }
 
-  if (String(comment.owner) === String(userId)) {
-    comment.comments.filter(
-      (filterId) => String(filterId) !== String(commentId)
-    );
+  if (String(comment.owner._id) === String(userId)) {
+    await Comment.findByIdAndDelete(commentId);
 
-    await Comment.findByIdAndDelete({ id });
+    await User.updateOne({ _id: userId }, { $pull: { comments: commentId } });
+
+    await Video.updateOne(
+      { _id: comment.video._id },
+      { $pull: { comments: commentId } }
+    );
   } else {
     return res.sendStatus(404);
   }
